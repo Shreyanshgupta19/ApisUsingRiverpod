@@ -5,8 +5,7 @@ import '../model/getUi3Model&UserIndexModel.dart';
 import '../repo/getUi3&UserIndexRepo.dart';
 
 final futureIndexProvider = FutureProvider.autoDispose
-    .family<List<getUi3Model>?, int>((ref,
-    index) async { // <return type data, send type data>
+    .family<List<getUi3Model>?, int>((ref, index) async { // <return type data, send type data>
   return await getUi3Repo().fetchGetUi3IndexRepo(index: index);
 });
 
@@ -36,8 +35,7 @@ class _GetUiIndexState extends ConsumerState<GetUiIndex> {
         children: [
           Consumer(
               builder: (context, ref, child) {
-                return
-                Column(
+                return Column(
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -121,8 +119,7 @@ class _GetUiIndexState extends ConsumerState<GetUiIndex> {
                                           CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              data[index].data.id?.toString() ??
-                                                  ' ',
+                                              data[index].data.id?.toString() ?? ' ',
                                               style: const TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 18,
@@ -130,8 +127,7 @@ class _GetUiIndexState extends ConsumerState<GetUiIndex> {
                                               ),
                                             ),
                                             Text(
-                                              data[index].support.url
-                                                  ?.toString() ?? ' ',
+                                              data[index].support.url?.toString() ?? ' ',
                                               style: const TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 12,
@@ -139,8 +135,7 @@ class _GetUiIndexState extends ConsumerState<GetUiIndex> {
                                               ),
                                             ),
                                             Text(
-                                              data[index].data.firstName
-                                                  ?.toString() ?? ' ',
+                                              data[index].data.firstName?.toString() ?? ' ',
                                               style: const TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 12,

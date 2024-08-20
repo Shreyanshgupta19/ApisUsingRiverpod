@@ -30,4 +30,9 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
+// ref.invalidate(futureIndexProvider); // refreshing the ui
+// ref.watch(futureIndexProvider(index)); // rebuilds the widget when value is change
+// ref.read(futureIndexProvider(index)); // value is change only once
+// ref.listen(futureIndexProvider(index),
+// (previous, next) {},
+// onError: (error, stackTrace) {},); // value is change without rebuilds the widget
