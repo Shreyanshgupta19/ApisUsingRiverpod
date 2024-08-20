@@ -5,7 +5,8 @@ import '../model/getUi3Model&UserIndexModel.dart';
 import '../repo/getUi3&UserIndexRepo.dart';
 
 final futureIndexProvider = FutureProvider.autoDispose
-    .family<List<getUi3Model>?, int>((ref, index) async {
+    .family<List<getUi3Model>?, int>((ref,
+    index) async { // <return type data, send type data>
   return await getUi3Repo().fetchGetUi3IndexRepo(index: index);
 });
 
@@ -33,31 +34,40 @@ class _GetUiIndexState extends ConsumerState<GetUiIndex> {
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: controller,
-              decoration: const InputDecoration(
-                labelText: 'Enter index',
-              ),
-              keyboardType: TextInputType.number,
-            ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              final index = int.tryParse(controller.text) ?? 2;
-              ref.invalidate(futureIndexProvider);
-              ref.watch(futureIndexProvider(index));
-            },
-            child: const Text('Fetch Data'),
-          ),
-          Expanded(
-            child: Consumer(
+          Consumer(
               builder: (context, ref, child) {
+                return
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextField(
+                        controller: controller,
+                        decoration: const InputDecoration(
+                          labelText: 'Enter index',
+                        ),
+                        keyboardType: TextInputType.number,
+                      ),
+                    ),
+                ElevatedButton(
+                onPressed: () {
                 final index = int.tryParse(controller.text) ?? 2;
-                final asyncData = ref.watch(futureIndexProvider(index));
-
-                return asyncData.when(
+                ref.invalidate(futureIndexProvider); // refreshing the ui
+                ref.watch(futureIndexProvider(index)); // rebuilds the widget when value is change
+                },
+                child: const Text('Fetch Data'),
+                ),
+                  ],
+                );
+              }
+          ),
+          Consumer(
+            builder: (context, ref, child) {
+              final index = int.tryParse(controller.text) ?? 2;
+              final asyncData = ref.watch(futureIndexProvider(index));
+          
+              return Expanded(
+                child: asyncData.when(
                   data: (data) {
                     if (data == null || data.isEmpty) {
                       return Center(
@@ -81,9 +91,7 @@ class _GetUiIndexState extends ConsumerState<GetUiIndex> {
                         itemCount: data.length,
                         itemBuilder: (context, index) {
                           return InkWell(
-                            onTap: () {
-                              // Handle tap
-                            },
+                            onTap: () {},
                             child: Padding(
                               padding: const EdgeInsets.only(
                                   left: 8, right: 8, bottom: 8),
@@ -99,21 +107,22 @@ class _GetUiIndexState extends ConsumerState<GetUiIndex> {
                                     ),
                                     child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                      MainAxisAlignment.start,
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                      CrossAxisAlignment.center,
                                       children: [
                                         const Icon(Icons.library_books,
                                             color: Colors.black, size: 65),
                                         const SizedBox(width: 8),
                                         Column(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              data[index].data.id?.toString() ?? ' ',
+                                              data[index].data.id?.toString() ??
+                                                  ' ',
                                               style: const TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 18,
@@ -121,7 +130,8 @@ class _GetUiIndexState extends ConsumerState<GetUiIndex> {
                                               ),
                                             ),
                                             Text(
-                                              data[index].support.url?.toString() ?? ' ',
+                                              data[index].support.url
+                                                  ?.toString() ?? ' ',
                                               style: const TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 12,
@@ -129,7 +139,8 @@ class _GetUiIndexState extends ConsumerState<GetUiIndex> {
                                               ),
                                             ),
                                             Text(
-                                              data[index].data.firstName?.toString() ?? ' ',
+                                              data[index].data.firstName
+                                                  ?.toString() ?? ' ',
                                               style: const TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 12,
@@ -171,9 +182,9 @@ class _GetUiIndexState extends ConsumerState<GetUiIndex> {
                     return const Center(
                         child: CircularProgressIndicator(color: Colors.blue));
                   },
-                );
-              },
-            ),
+                ),
+              );
+            },
           ),
         ],
       ),
