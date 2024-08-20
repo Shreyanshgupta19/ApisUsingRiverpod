@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Screen1(), // getui1(),// getui2(),// getui3(),// getui4(), // LoginUI() // GetUiIndex() // Screen1() // Screen2()
+      home: const GetUiIndex(), // getui1(),// getui2(),// getui3(),// getui4(), // LoginUI() // GetUiIndex() // Screen1() // Screen2()
     );
   }
 }

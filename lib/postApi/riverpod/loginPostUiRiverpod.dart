@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../postModel/loginModel.dart';
 import '../repo/loginPostRepo.dart';
 
-final postApiProvider = StateNotifierProvider.autoDispose<PostNotifier, PostState>(  // <return type class ka name, return type class kya return kr rahi hai>
+final postApiProvider = StateNotifierProvider.autoDispose<PostNotifier, PostState>(  // <return type data, send type data>
       (ref) {
     return PostNotifier();
   },
